@@ -11,7 +11,7 @@ io.on('connection', function(socket){
     io.emit('chat message', msg);
   });
 });
-http.listen(3000, 'localhost');
+http.listen(8080);
 http.on('listening', function() {
 
   console.log('Server started on port %s at %s',http.address().port, http.address().address)

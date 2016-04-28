@@ -5,7 +5,7 @@ FROM node:4.4.3
 # then the process inside the container will run as root,
 # which is against security best practices and principles.
 RUN useradd --user-group --create-home --shell /bin/false app &&\
-  npm install --global npm@3.7.5
+  npm install --global npm@3.8.7
 
 # Home env variable
 ENV HOME=/home/app
@@ -23,8 +23,6 @@ WORKDIR $HOME/chat
 
 # install packages
 RUN npm install
-
-EXPOSE 3000
 
 # run command
 CMD ["node", "index.js"]
