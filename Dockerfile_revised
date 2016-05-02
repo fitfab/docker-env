@@ -10,22 +10,24 @@ RUN useradd --user-group --create-home --shell /bin/false app &&\
 # Home env variable
 ENV HOME=/home/app
 
-# copy package.json and npm-shrinkwrap.json from host
-# to the container
-COPY package.json npm-shrinkwrap.json $HOME/chat/
+# Copy package.json and npm-shrinkwrap.json to
+# tmp and install dependencies
+WORKDIR /tmp
+COPY package.json npm-shrinkwrap.json /tmp/
+RUN npm config set registry http://registry.npmjs.org/ && \
+    npm install && npm shrinkwrap
+
+# Copy node_modules into the /home/app/chat/
+COPY node_modules $HOME/chat
+
+# Change onwer to app with reading priveleges.
 RUN chown -R app:app $HOME/*
 
 # set user
 USER app
 
-# Working directory
+# Set working directory to /home/app/chat
 WORKDIR $HOME/chat
-
-# Set npm  registry helps speed up things 
-# (https://medium.com/@andyccs/webpack-and-docker-for-development-and-deployment-ae0e73243db4#.1p0m5nwx6)
-# install packages and shrinkwrap
-RUN npm config set registry http://registry.npmjs.org/ && \
-    npm install && npm shrinkwrap
 
 # run command
 CMD ["node", "index.js"]
