@@ -21,7 +21,7 @@ USER app
 # Working directory
 WORKDIR $HOME/chat
 
-# Set npm  registry helps speed up things 
+# Setting the npm  registry helps speed up things 
 # (https://medium.com/@andyccs/webpack-and-docker-for-development-and-deployment-ae0e73243db4#.1p0m5nwx6)
 # install packages and shrinkwrap
 RUN npm config set registry http://registry.npmjs.org/ && \
